@@ -2,8 +2,6 @@
 
 _by Vytenis Urbonavičius_
 
-**UNDER DEVELOPMENT - NOT WORKING WELL YET**
-
 _use-chat-scroll_ is a React hook for chat-like scroll behavior of HTML elements.
 
 Main features:
@@ -27,17 +25,21 @@ npm install --save use-chat-scroll
 
 Below examples use **TypeScript**. However, you can use plain **JavaScript** as well by skipping type declarations and writing everything else same as in examples.
 
-Typical usage of full chat scroll behavior:
+Usage example of full chat scroll behavior with React hooks for data state management:
 
 ```typescript
-import {useChatScroll} from 'use-chat-scroll'
+import {useChatScroll, useDataLoader} from 'use-chat-scroll'
 
-const YourFunctionalReactComponent: React.FC = (data: any[], loadMoreCb: ILoadMoreCb) => {
+const loadAdditionalData = () => [ /* Additional data */ ]
+
+const YourFunctionalReactComponent: React.FC = () => {
+  const [data, setData] = useState<any[]>([])
   const containerRef = useRef<React.MutableRefObject<HTMLDivElement>>()
-  useChatScroll(containerRef, data, loadMoreCb)
+  const loader = useDataLoader(loadAdditionalData, data, setData)
+  useChatScroll(containerRef, data, loader)
 
   return (
-    <div ref={containerRef} style={{height: 100, width: 100, overflow: 'auto'}}>
+    <div ref={containerRef} style={{height: "400px", width: "100%", overflow: 'auto'}}>
       {data.map(item => (
         // ...
       ))}
@@ -45,6 +47,12 @@ const YourFunctionalReactComponent: React.FC = (data: any[], loadMoreCb: ILoadMo
   )
 }
 ```
+
+In case you would notice that scroll is not properly adjusted when loading additional data, make sure that setting _scrollTop_ attribute to scrollable HTML element works. Sometimes browsers have issues when height is set using percentage. This is not considered to be a hook-related issue.
+
+Note that even if _loadAdditionalData_ would be defined inside a functional component, it would not be able to properly use state variables such as _data_. If such data would need to be passed, use optional fourth argument of _useDataLoader_ hook. Array passed there would become accessible as arguments in _loadAdditionalData_.
+
+If you would be using a state management library such as _Redux_ with thunk actions, you would not need to be using _useDataLoader_. In such case your action should accept _beforeRender_ callback and would become a _loader_ itself. _beforeRender_ callback should be invoked immediately after gathering data but before updating state.
 
 If you only need to keep scroll at the bottom without infinite scroll behavior:
 
@@ -56,7 +64,7 @@ const YourFunctionalReactComponent: React.FC = (data: any[]) => {
   useStickyScroll(containerRef, data)
 
   return (
-    <div ref={containerRef} style={{height: 100, width: 100, overflow: 'auto'}}>
+    <div ref={containerRef} style={{height: "400px", width: "100%", overflow: 'auto'}}>
       {data.map(item => (
         // ...
       ))}
@@ -64,12 +72,6 @@ const YourFunctionalReactComponent: React.FC = (data: any[]) => {
   )
 }
 ```
-
-**Important!**
-
-_loadMoreCb_ is called whenever additional data chunk/page needs to be loaded. It is very important to ensure that this callback does not issue a request if end of data is reached. Otherwise target server will be spammed with multiple useless requests. It is also a responsibility of consumer of the hook to determine what is already loaded and what should be loaded at the moment of calling the callback.
-
-_loadMoreCb_ needs to accept an argument _beforeRender_. This argument is a callback which should be called immediately after server responds with a new chunk/page of data but before this data is handled by some state management library or React itself.
 
 ## Supported Configuration
 

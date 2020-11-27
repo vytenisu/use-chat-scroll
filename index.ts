@@ -1,5 +1,6 @@
 export * from './lib/chat-scroll'
 export * from './lib/sticky-scroll'
+export * from './lib/data-loader'
 
 export {
   IBeforeRenderCb,

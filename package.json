@@ -1,6 +1,6 @@
 {
   "name": "use-chat-scroll",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "React hook for chat-like scroll behavior",
   "main": "dist/index.js",
   "scripts": {

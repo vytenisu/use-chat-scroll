@@ -100,7 +100,7 @@ const useReverseInfiniteScrollOptions = (
   const scrollThresholdValue =
     options?.scrollThreshold?.value ??
     scrollThresholdType === EScrollThresholdType.fraction
-      ? 0.3
+      ? 0.2
       : 1000
 
   const enabled = options?.enabled ?? true
@@ -155,7 +155,7 @@ export interface IScrollThreshold {
  */
 export enum EScrollThresholdType {
   /**
-   * Fraction of content height left to the top (for example 0.3).
+   * Fraction of content height left to the top (for example 0.2).
    */
   fraction,
 
