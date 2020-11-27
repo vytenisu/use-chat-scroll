@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["es2015", "es2017", "dom"],
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitUseStrict": true,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["./**/*.ts"],
+  "exclude": [
+    "test",
+    "**/*.test.ts",
+    "node_modules",
+    "cache",
+    "build",
+    "static"
+  ]
+}
