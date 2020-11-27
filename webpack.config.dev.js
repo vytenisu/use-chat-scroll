@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const NpmDtsWebpackPlugin = require('npm-dts-webpack-plugin')
+const nodeExternals = require('webpack-node-externals')
 
 const exportedConfig = {
   entry: __dirname + '/index.ts',
@@ -18,6 +19,7 @@ const exportedConfig = {
   resolveLoader: {
     modules: [__dirname + '/node_modules'],
   },
+  externals: [nodeExternals()],
   plugins: [new NpmDtsWebpackPlugin()],
   module: {
     rules: [

@@ -2,6 +2,8 @@
 
 _by Vytenis Urbonavičius_
 
+**UNDER DEVELOPMENT - NOT WORKING WELL YET**
+
 _use-chat-scroll_ is a React hook for chat-like scroll behavior of HTML elements.
 
 Main features:
